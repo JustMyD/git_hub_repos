@@ -21,6 +21,7 @@ for (( i=2; i<"${#queryResults[@]} - 1"; i++ )) do
     echo "$internalId" "$projectName" "$portForward"
     
     docker build --network=host -t "$projectName" "$projectPath" &&
+    docker rm $projectName &&
     docker run -d $portForward --name $projectName $projectName &&
     psql -d main -U comediant -c "update git.queue set IsProcessed = 2 where RepositoryName = '$projectName' and InternalId = '$internalId'"
 done
