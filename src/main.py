@@ -1,0 +1,33 @@
+import subprocess
+import logging
+
+from fastapi import FastAPI
+from fastapi.requests import Request
+from fastapi.responses import JSONResponse
+
+from db_dto import DbWorker
+
+app = FastAPI()
+# logger = logging.getLogger(__name__)
+# logging.basicConfig(filename='git_hub.log', level=logging.INFO)
+
+
+@app.post('/git_hub')
+async def process_repo_updates(req: Request):
+    db_worker = DbWorker()
+
+    data = await req.json()
+    repo_name = data['repository']['name']
+    external_id = data['head_commit']['id']
+
+    db_worker.update_git_queue(commit_id=external_id, repo_name=repo_name)
+
+    return JSONResponse({'result': 'Success'}, 200)
+
+
+@app.get('/test')
+async def test_endpoint():
+    db_data = db_worker.test_db_connection()
+
+    return db_data
+
