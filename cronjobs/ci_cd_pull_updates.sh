@@ -10,7 +10,7 @@ from (
         where nPartYearMonth = now()::date
 ) part
 join git.projects config on part.RepositoryName = config.ProjectName
-where part.rn = 1 and part.IsProcessed = 0
+where part.rn = 1 and part.IsProcessed = 0 and config.Status = 1
 ')"
 
 for (( i=2; i<"${#queryResults[@]} - 1"; i++ )) do
