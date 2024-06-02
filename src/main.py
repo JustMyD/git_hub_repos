@@ -6,6 +6,9 @@ from fastapi.requests import Request
 from fastapi.responses import JSONResponse
 
 from db_dto import DbWorker
+from utils import set_env_variables
+
+set_env_variables()
 
 app = FastAPI()
 # logger = logging.getLogger(__name__)
