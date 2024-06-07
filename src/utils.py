@@ -10,3 +10,4 @@ def set_env_variables():
 
     for var in ENV_VARS:
         environ[var] = redis_client.get(var).decode('utf8')
+
