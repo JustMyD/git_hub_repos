@@ -6,7 +6,7 @@ ENV_VARS = ('POSTGRESQL_PORT', 'POSTGRESQL_DBNAME', 'POSTGRESQL_USERNAME', 'POST
 
 
 def set_env_variables():
-    redis_client = Redis(host='0.0.0.0', port=6379)
+    redis_client = Redis(host='172.17.0.1', port=6379)
 
     for var in ENV_VARS:
         environ[var] = redis_client.get(var).decode('utf8')
