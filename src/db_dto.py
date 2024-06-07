@@ -26,4 +26,3 @@ class DbWorker:
 
         self._cursor.execute(sql_template, (commit_id, repo_name))
         self.__connection.commit()
-
