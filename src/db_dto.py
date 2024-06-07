@@ -1,22 +1,22 @@
+import os
+
 from psycopg import connect
 
 
 class DbWorker:
     def __init__(self):
-        self.__connection = connect(dbname='main', user='comediant', password='1234', host='172.17.0.1', port=5432)
+        self.__connection = connect(
+            dbname=os.getenv('POSTGRESQL_DBNAME'),
+            user=os.getenv('POSTGRESQL_USERNAME'),
+            password=os.getenv('POSTGRESQL_USERPASSWORD'),
+            host=os.getenv('DOCKER_HOST'),
+            port=os.getenv('POSTGRESQL_PORT')
+        )
         self._cursor = self.__connection.cursor()
 
     def __del__(self):
         self._cursor.close()
         self.__connection.close()
-
-    def test_db_connection(self):
-        sql_template = "select * from tmp_table"
-
-        self._cursor.execute(sql_template)
-        result = self._cursor.fetchall()
-
-        return result
 
     def update_git_queue(self, commit_id, repo_name):
         sql_template = """

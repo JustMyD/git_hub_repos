@@ -2,7 +2,7 @@ from os import environ
 
 from redis import Redis
 
-ENV_VARS = ('POSTGRESQL_PORT', 'POSTGRESQL_DBNAME', 'POSTGRESQL_USERNAME', 'POSTGRESQL_USERPASSWORD')
+ENV_VARS = ('POSTGRESQL_PORT', 'POSTGRESQL_DBNAME', 'POSTGRESQL_USERNAME', 'POSTGRESQL_USERPASSWORD', 'DOCKER_HOST')
 
 
 def set_env_variables():
@@ -10,4 +10,3 @@ def set_env_variables():
 
     for var in ENV_VARS:
         environ[var] = redis_client.get(var).decode('utf8')
-
